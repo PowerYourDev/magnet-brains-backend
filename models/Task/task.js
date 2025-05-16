@@ -18,8 +18,25 @@ const taskSchema=mongoose.Schema({
         type:String,
         required:true,
         enum: {
-            values: ["admin","user"],
+            values: ["pending","completed"],
             message: `{VALUE} is incorrect status type`,
           },
-    }
-})
+    },
+    assignedTo:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
+    },
+    assignedBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"user",
+        required:true
+    },
+    
+},
+
+{ timestamps: true })
+
+const Task=mongoose.model("Task",taskSchema)
+
+module.exports=Task

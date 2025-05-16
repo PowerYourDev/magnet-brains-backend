@@ -9,7 +9,7 @@ const {
 const authRouter=express.Router()
 
 authRouter.post("/singup",authSingUpCtrl)
-authRouter.post('/signin',authLoginCtrl)
+authRouter.post('/singin',authLoginCtrl)
 
 
 

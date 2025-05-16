@@ -20,20 +20,42 @@ const singupValidate =(req)=>{
 
 }
 
+const taskValidation=(req)=>{
+  const {title,description,dueDate,status,assignedTo}=req.body
+
+  if(!title ){
+    throw new Error("title is required")
+  }
+  if(!description ){
+      throw new Error("description is required")
+    }
+    if(!dueDate ){
+      throw new Error("dueDate is required")
+    }
+  if(!status){
+      throw new Error("status is  required ") 
+  }
+  if(!assignedTo){
+    throw new Error("assignedTo is  required ") 
+}
+
+}
+
 const checkingAllowedFields=(req)=>{
-    const checkingAllowedFields=['firstName',"lastName","email","age","gender","photoUrl","skills","about"]
+    const checkingAllowedFields=['title',"description","dueDate","status","assignedTo"]
     
    const allowedFields= Object.keys(req).every((key)=>{
       return  checkingAllowedFields.includes(key)
     })
 
     if(!allowedFields){
-        throw new Error("updating profile is not allowed")
+        throw new Error("updating task is not allowed")
     }
 }
 
 
 module.exports={
     singupValidate,
-    checkingAllowedFields
+    checkingAllowedFields,
+    taskValidation
 }

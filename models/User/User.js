@@ -18,10 +18,10 @@ required:true
         required:[true,"password is required field"],
     },
     role:{
-        type:string,
+        type:String,
         required:[true,"role is required field"],
     }
-})
+},{ timestamps: true })
 
 userSchema.pre('save',async function (next){
     if(!this.isModified('password')){
