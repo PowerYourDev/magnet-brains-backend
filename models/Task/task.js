@@ -22,6 +22,14 @@ const taskSchema=mongoose.Schema({
             message: `{VALUE} is incorrect status type`,
           },
     },
+    priority:{
+        type:String,
+        required:true,
+        enum: {
+            values: ["High","Low","Medium"],
+            message: `{VALUE} is incorrect status type`,
+          },
+    },
     assignedTo:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',

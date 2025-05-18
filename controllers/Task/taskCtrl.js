@@ -8,8 +8,8 @@ const adminTaskSaving=async(req,res)=>{
     try{
         taskValidation(req)
         const user= req.user
-        const {title,description,dueDate,status,assignedTo}=req.body
-        const savingTask=await Task.create({title,description,dueDate,status,assignedTo,assignedBy:user._id})
+        const {title,description,dueDate,status,assignedTo,priority}=req.body
+        const savingTask=await Task.create({title,priority,description,dueDate,status,assignedTo,assignedBy:user._id})
 
         res.status(201).json({
             message:"task created successully",
@@ -141,11 +141,41 @@ const updateTask=async(req,res)=>{
     }
 }
 
+const getAllUserTask = async (req, res) => {
+    try {
+      const user = req.user;
+      console.log(user._id,"huuhuui")
+  
+      const page = parseInt(req.query.page) || 1;
+      let limit = parseInt(req.query.limit) || 10;
+      limit = limit > 50 ? 50 : limit;
+      const skip = (page - 1) * limit;
+  
+      const totalTasks = await Task.countDocuments({ assignedTo: user._id });
+  
+      const tasks = await Task.find({ assignedTo: user._id })
+        .skip(skip)
+        .limit(limit);
+  
+      res.status(200).json({
+        message: "Successfully fetched user tasks",
+        data: tasks,
+        totalTasks,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error.message,
+      });
+    }
+  };
+  
 
 module.exports={
     adminTaskSaving,
     adminGetAllTasks,
     adminDetailGetTask,
     deleteTask,
-    updateTask
+    updateTask,
+    getAllUserTask
 }

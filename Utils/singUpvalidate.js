@@ -1,7 +1,7 @@
 const Validate=require('validator')
 
 const singupValidate =(req)=>{
-    const {userName,email,password}=req.body
+    const {userName,email,password,role}=req.body
 
     if(!userName ){
       throw new Error("userName is required")
@@ -12,6 +12,9 @@ const singupValidate =(req)=>{
       if(!password ){
         throw new Error("password is required")
       }
+      if(!role ){
+        throw new Error("role is required")
+      }
     if(!Validate.isEmail(email)){
         throw new Error("email is not valid ") 
     }
@@ -21,7 +24,7 @@ const singupValidate =(req)=>{
 }
 
 const taskValidation=(req)=>{
-  const {title,description,dueDate,status,assignedTo}=req.body
+  const {title,description,dueDate,status,assignedTo,priority}=req.body
 
   if(!title ){
     throw new Error("title is required")
@@ -38,11 +41,14 @@ const taskValidation=(req)=>{
   if(!assignedTo){
     throw new Error("assignedTo is  required ") 
 }
+if(!priority){
+  throw new Error("priority is  required ") 
+}
 
 }
 
 const checkingAllowedFields=(req)=>{
-    const checkingAllowedFields=['title',"description","dueDate","status","assignedTo"]
+    const checkingAllowedFields=['title',"description","dueDate","status","assignedTo","priority"]
     
    const allowedFields= Object.keys(req).every((key)=>{
       return  checkingAllowedFields.includes(key)

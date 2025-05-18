@@ -2,6 +2,7 @@
 const express= require('express')
 const dbConnect =require('./config/Db/DbConnect')
 require('dotenv').config();
+const cors =require('cors')
 const cookieParser = require('cookie-parser');
 
 const TasksRoutes=require('./routes/Tasks/taskRoute')
@@ -9,8 +10,18 @@ const AuthRoute = require("./routes/Auth/AuthRoute")
 
 
 const App=express()
+
+
+App.use(cors(
+  {
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }
+))
+
 App.use(express.json());
 App.use(cookieParser());
+
 
 // App.use('/api/task',TasksRoutes)
 App.use('/api/auth',AuthRoute)

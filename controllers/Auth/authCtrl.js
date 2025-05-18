@@ -10,14 +10,14 @@ const { singupValidate } = require('../../Utils/singUpvalidate')
 const authSingUpCtrl=async(req,res,next)=>{
     try{
       singupValidate(req)
-        const {userName,email,password}=req.body
+        const {userName,email,password,role}=req.body
         const emailExists = await User.findOne({email})
         if(emailExists){
           return res.status(409).json({ message: "Email already exists." })
         }
       
         
-         const savedUser= await User.create({userName,email,password})
+         const savedUser= await User.create({userName,email,password,role})
 
       
          const tokenGenerated = generateToken(savedUser._id)
@@ -80,7 +80,35 @@ const authSingUpCtrl=async(req,res,next)=>{
     }
   }  
 
+
+  const getAllUsers=async(req,res)=>{
+    try {
+      const users = await User.find({})
+      if(!users){
+        return res.status(404).json({
+          message:"something went wrong"
+        })
+      }
+
+      res.status(200).json(
+        {
+            message:"successfully fetched all users",
+            data:users,
+          
+        }
+    )
+
+      
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error: error.message
+    });
+    }
+  }
+
   module.exports={
     authSingUpCtrl,
-    authLoginCtrl
+    authLoginCtrl,
+    getAllUsers
   }

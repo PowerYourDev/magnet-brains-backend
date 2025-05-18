@@ -20,6 +20,10 @@ required:true
     role:{
         type:String,
         required:[true,"role is required field"],
+        enum: {
+            values: ["Admin","User"],
+            message: `{VALUE} is incorrect status type`,
+          },
     }
 },{ timestamps: true })
 
