@@ -19,10 +19,7 @@ App.use(cors(
   }
 ))
 
-App.options('*', cors({
-  origin: 'https://magnet-brains-frontend.vercel.app',
-  credentials: true,
-}));
+
 
 App.use(express.json());
 App.use(cookieParser());
