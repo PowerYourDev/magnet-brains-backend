@@ -14,7 +14,7 @@ const App=express()
 
 App.use(cors(
   {
-    origin: 'http://localhost:5173',
+    origin: 'https://magnet-brains-frontend.vercel.app/',
     credentials: true,
   }
 ))
